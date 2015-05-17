@@ -1,32 +1,46 @@
----
-title: "Reproducible Research: Peer Assessment 1"
-output: 
-  html_document:
-    keep_md: true
----
+# Reproducible Research: Peer Assessment 1
 
 
 ## Loading and preprocessing the data
 
-```{r loaddata,echo=TRUE}
+
+```r
 unzip(zipfile="activity.zip")
 data <- read.csv("activity.csv")
 ```
 
 
 ## What is mean total number of steps taken per day?
-```{r,"total number of steps/day",echo=TRUE}
+
+```r
 library(ggplot2)
 total.steps <- tapply(data$steps, data$date, FUN=sum, na.rm=TRUE)
 qplot(total.steps, binwidth=1000, xlab="total number of steps taken each day")
+```
+
+![](PA1_template_files/figure-html/total number of steps/day-1.png) 
+
+```r
 mean(total.steps, na.rm=TRUE)
+```
+
+```
+## [1] 9354.23
+```
+
+```r
 median(total.steps, na.rm=TRUE)
+```
+
+```
+## [1] 10395
 ```
 
 
 
 ## What is the average daily activity pattern?
-```{r,"Avg Daily Acitivity Pattern",echo=TRUE}
+
+```r
 library(ggplot2)
 averages <- aggregate(x=list(steps=data$steps), by=list(interval=data$interval),
                       FUN=mean, na.rm=TRUE)
@@ -36,8 +50,16 @@ ggplot(data=averages, aes(x=interval, y=steps)) +
     ylab("average number of steps taken")
 ```
 
-```{r,echo=TRUE}
+![](PA1_template_files/figure-html/Avg Daily Acitivity Pattern-1.png) 
+
+
+```r
 averages[which.max(averages$steps),]
+```
+
+```
+##     interval    steps
+## 104      835 206.1698
 ```
 
 
@@ -45,16 +67,24 @@ averages[which.max(averages$steps),]
 ## Inputing missing values
 
 
-```{r," Missing Values",echo=TRUE}
+
+```r
 missing <- is.na(data$steps)
 # How many missing
 table(missing)
 ```
 
+```
+## missing
+## FALSE  TRUE 
+## 15264  2304
+```
+
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
-```{r,"Interval Calculation",echo=TRUE }
+
+```r
 # Replace each missing value with the mean value of its 5-minute interval
 fill.value <- function(steps, interval) {
     filled <- NA
@@ -68,14 +98,32 @@ filled.data <- data
 filled.data$steps <- mapply(fill.value, filled.data$steps, filled.data$interval)
 ```
 
-```{r, "histogram",echo=TRUE}
+
+```r
 total.steps <- tapply(filled.data$steps, filled.data$date, FUN=sum)
 qplot(total.steps, binwidth=1000, xlab="total number of steps taken each day")
+```
+
+![](PA1_template_files/figure-html/histogram-1.png) 
+
+```r
 mean(total.steps)
+```
+
+```
+## [1] 10766.19
+```
+
+```r
 median(total.steps)
 ```
 
-```{r,echo=TRUE }
+```
+## [1] 10766.19
+```
+
+
+```r
 weekday.or.weekend <- function(date) {
     day <- weekdays(date)
     if (day %in% c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"))
@@ -90,11 +138,14 @@ filled.data$day <- sapply(filled.data$date, FUN=weekday.or.weekend)
 ```
 
 
-```{r,"Avg - WeekDays/Weekends",echo=TRUE}
+
+```r
 averages <- aggregate(steps ~ interval + day, data=filled.data, mean)
 ggplot(averages, aes(interval, steps)) + geom_line() + facet_grid(day ~ .) +
     xlab("5-minute interval") + ylab("Number of steps")
 ```
+
+![](PA1_template_files/figure-html/Avg - WeekDays/Weekends-1.png) 
 
 
 
