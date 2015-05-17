@@ -1,4 +1,9 @@
-# Reproducible Research: Peer Assessment 1
+---
+title: "Reproducible Research: Peer Assessment 1"
+output: 
+  html_document:
+    keep_md: true
+---
 
 
 
@@ -19,7 +24,7 @@ total.steps <- tapply(data$steps, data$date, FUN=sum, na.rm=TRUE)
 qplot(total.steps, binwidth=1000, xlab="Total number of Steps/Day") +  theme(panel.background = element_blank())
 ```
 
-![](PA1_template_files/figure-html/total number of steps/day-1.png) 
+![plot of chunk total number of steps/day](figure/total number of steps/day-1.png) 
 
 ```r
 mean(total.steps, na.rm=TRUE)
@@ -51,7 +56,7 @@ ggplot(data=averages, aes(x=interval, y=steps)) +
     ylab("Average No. of Steps taken") +  theme(panel.background = element_blank())
 ```
 
-![](PA1_template_files/figure-html/Avg Daily Acitivity Pattern-1.png) 
+![plot of chunk Avg Daily Acitivity Pattern](figure/Avg Daily Acitivity Pattern-1.png) 
 
 
 ```r
@@ -100,7 +105,7 @@ total.steps <- tapply(filled.data$steps, filled.data$date, FUN=sum)
 qplot(total.steps, binwidth=1000, xlab="Total number of Steps/Day") +  theme(panel.background = element_blank())
 ```
 
-![](PA1_template_files/figure-html/histogram-1.png) 
+![plot of chunk histogram](figure/histogram-1.png) 
 
 ```r
 mean(total.steps)
@@ -141,7 +146,7 @@ ggplot(averages, aes(interval, steps)) + geom_line() + facet_grid(day ~ .) +
     xlab("5-minute interval") + ylab("Number of steps") +  theme(panel.background = element_blank())
 ```
 
-![](PA1_template_files/figure-html/Avg - WeekDays/Weekends-1.png) 
+![plot of chunk Avg - WeekDays/Weekends](figure/Avg - WeekDays/Weekends-1.png) 
 
 
 
