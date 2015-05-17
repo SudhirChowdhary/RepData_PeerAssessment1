@@ -44,7 +44,6 @@ averages[which.max(averages$steps),]
 
 ## Inputing missing values
 
-
 ```{r," Missing Values",echo=TRUE}
 missing <- is.na(data$steps)
 # How many missing
@@ -75,7 +74,7 @@ mean(total.steps)
 median(total.steps)
 ```
 
-```{r,echo=TRUE }
+```{r,"Weekend/WeekEnd Analysis", echo=TRUE }
 weekday.or.weekend <- function(date) {
     day <- weekdays(date)
     if (day %in% c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"))
