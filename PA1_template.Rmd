@@ -41,18 +41,14 @@ averages[which.max(averages$steps),]
 ```
 
 
-
 ## Inputing missing values
-
 ```{r," Missing Values",echo=TRUE}
 missing <- is.na(data$steps)
 # How many missing
 table(missing)
 ```
 
-
 ## Are there differences in activity patterns between weekdays and weekends?
-
 ```{r,"Interval Calculation",echo=TRUE }
 # Replace each missing value with the mean value of its 5-minute interval
 fill.value <- function(steps, interval) {
