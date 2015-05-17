@@ -1,9 +1,10 @@
 ---
 title: "Reproducible Research: Peer Assessment 1"
-author: "Sudhir Chowdhary"
-date: "Sunday, May 17, 2015"
-output: html_document
+output: 
+  html_document:
+    keep_md: true
 ---
+
 
 
 ## Loading and preprocessing the data

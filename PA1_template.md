@@ -1,6 +1,7 @@
 # Reproducible Research: Peer Assessment 1
 
 
+
 ## Loading and preprocessing the data
 
 
@@ -15,7 +16,7 @@ data <- read.csv("activity.csv")
 ```r
 library(ggplot2)
 total.steps <- tapply(data$steps, data$date, FUN=sum, na.rm=TRUE)
-qplot(total.steps, binwidth=1000, xlab="total number of steps taken each day")
+qplot(total.steps, binwidth=1000, xlab="Total number of Steps/Day") +  theme(panel.background = element_blank())
 ```
 
 ![](PA1_template_files/figure-html/total number of steps/day-1.png) 
@@ -46,8 +47,8 @@ averages <- aggregate(x=list(steps=data$steps), by=list(interval=data$interval),
                       FUN=mean, na.rm=TRUE)
 ggplot(data=averages, aes(x=interval, y=steps)) +
     geom_line() +
-    xlab("5-minute interval") +
-    ylab("average number of steps taken")
+    xlab("5-minute Interval") +
+    ylab("Average No. of Steps taken") +  theme(panel.background = element_blank())
 ```
 
 ![](PA1_template_files/figure-html/Avg Daily Acitivity Pattern-1.png) 
@@ -63,10 +64,7 @@ averages[which.max(averages$steps),]
 ```
 
 
-
 ## Inputing missing values
-
-
 
 ```r
 missing <- is.na(data$steps)
@@ -80,9 +78,7 @@ table(missing)
 ## 15264  2304
 ```
 
-
 ## Are there differences in activity patterns between weekdays and weekends?
-
 
 ```r
 # Replace each missing value with the mean value of its 5-minute interval
@@ -101,7 +97,7 @@ filled.data$steps <- mapply(fill.value, filled.data$steps, filled.data$interval)
 
 ```r
 total.steps <- tapply(filled.data$steps, filled.data$date, FUN=sum)
-qplot(total.steps, binwidth=1000, xlab="total number of steps taken each day")
+qplot(total.steps, binwidth=1000, xlab="Total number of Steps/Day") +  theme(panel.background = element_blank())
 ```
 
 ![](PA1_template_files/figure-html/histogram-1.png) 
@@ -142,7 +138,7 @@ filled.data$day <- sapply(filled.data$date, FUN=weekday.or.weekend)
 ```r
 averages <- aggregate(steps ~ interval + day, data=filled.data, mean)
 ggplot(averages, aes(interval, steps)) + geom_line() + facet_grid(day ~ .) +
-    xlab("5-minute interval") + ylab("Number of steps")
+    xlab("5-minute interval") + ylab("Number of steps") +  theme(panel.background = element_blank())
 ```
 
 ![](PA1_template_files/figure-html/Avg - WeekDays/Weekends-1.png) 
